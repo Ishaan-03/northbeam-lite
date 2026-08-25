@@ -27,7 +27,7 @@ graph TB
     subgraph data["Resources"]
         B1["S3: northbeam-dev-data"]
         B2["S3: northbeam-shared<br/>Alpha/ and Beta/ prefixes"]
-        LOGS["CloudWatch<br//northbeam/api-lite"]
+        LOGS["CloudWatch<br/>/northbeam/api-lite"]
     end
 
     ROOT -.->|bootstrap only| USER
