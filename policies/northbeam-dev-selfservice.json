@@ -1,0 +1,33 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "CreateDevRolesOnlyWithBoundary",
+      "Effect": "Allow",
+      "Action": "iam:CreateRole",
+      "Resource": "arn:aws:iam::<ACCOUNT_ID>:role/northbeam-dev-*",
+      "Condition": {
+        "StringEquals": {
+          "iam:PermissionsBoundary": "arn:aws:iam::<ACCOUNT_ID>:policy/NorthbeamDevBoundary"
+        }
+      }
+    },
+    {
+      "Sid": "AttachPoliciesToOwnDevRoles",
+      "Effect": "Allow",
+      "Action": ["iam:AttachRolePolicy", "iam:PutRolePolicy"],
+      "Resource": "arn:aws:iam::<ACCOUNT_ID>:role/northbeam-dev-*"
+    },
+    {
+      "Sid": "BlockRemovingOrSwappingBoundary",
+      "Effect": "Deny",
+      "Action": ["iam:DeleteRolePermissionsBoundary", "iam:PutRolePermissionsBoundary"],
+      "Resource": "*",
+      "Condition": {
+        "StringNotEquals": {
+          "iam:PermissionsBoundary": "arn:aws:iam::<ACCOUNT_ID>:policy/NorthbeamDevBoundary"
+        }
+      }
+    }
+  ]
+}
